@@ -1,10 +1,14 @@
 const { response } = require('express');
 const puppeteer = require('puppeteer');
 
-(async () => { 
+exports.crawlTicket = async (ticketId) => { 
 
-    const ticketId = 'E6YYN';
-    const browser = await puppeteer.launch({headless: false});
+    //ticketId = 'K5NB2';
+    const browser = await puppeteer.launch({
+        headless: true,
+        defaultViewport: false,
+        args: [ '--no-sandbox' ]
+    });
     const page = await browser.newPage();
     await page.goto('https://www.betking.com/sports/s');
 
@@ -17,10 +21,8 @@ const puppeteer = require('puppeteer');
         const btnText = await page.evaluate((el)=> el.textContent, loadBtn);
 
         await bookingCodeTextbox.type(ticketId);
-        await page.screenshot({path: 'before.png'});
         await loadBtn.click();
         await page.waitForSelector('#couponContent');
-        await page.screenshot({path: 'after.png'});
 
     } 
     catch(e) {
@@ -48,7 +50,7 @@ const puppeteer = require('puppeteer');
     //const totalWins = await betList.$eval('div.m-lay-left i.m-icon-check--checked', (e) => e.innerText);
     **/
 
-    result = [
+    const result = [
         ticketId,
         totalGames,
         potentialOdds,
@@ -56,7 +58,8 @@ const puppeteer = require('puppeteer');
         totalStake
     ]
 
-    console.log(result)
-    // await browser.close();
+    //console.log(result)
+    await browser.close();
+    return result;
 
-})();
+};

@@ -5,7 +5,7 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker');
 puppeteer.use(StealthPlugin());
 puppeteer.use(AdblockerPlugin({ blockTrackers: true }));
-const {newTicket, ticketConstants} = require('../TicketUtils');
+//const {newTicket, ticketConstants} = require('../TicketUtils');
 
 exports.crawlTicket = async(platform, betId) => {
     let results = [];
@@ -53,6 +53,7 @@ exports.crawlTicket = async(platform, betId) => {
         const totalStakes = (await betSummaryDiv.$$('div.mybets-holder__info-row div.mybets-holder__info-item')) ? await betSummaryDiv.$$eval('div.mybets-holder__info-row div.mybets-holder__info-item', (s) => s[1].textContent) : '';
         const ticketStatus = overallWon ? overallWon : overallLoss ? overallLoss : 'Pending'; 
 
+        /***
         data = {
             ticket_number: betId,
             gameDateTime: gameDateTime,
@@ -62,7 +63,7 @@ exports.crawlTicket = async(platform, betId) => {
             totalStake: totalStakes,
             totalOdd: totalOdds
         }
-
+        */
         // newTicket(data).then((ticket)=>{
             results.push({
                 gameDateTime,
