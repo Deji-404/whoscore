@@ -17,6 +17,8 @@ const puppeteer = require('puppeteer');
     const totalGames = games.length;
     console.log(outcomes);
 
+    return games;
+
     await browser.close();
 
 })();
