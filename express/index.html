@@ -132,6 +132,8 @@ body {font-family: "Lato", sans-serif}
                 <option value="bet9ja">Bet9ja</option>
                 <option value="sportybet">Sportybet</option>
                 <option value="betway">Betway</option>
+                <option value="merrybet">MerryBet</option>
+                <option value="wazobet">Wazobet</option>
               </select>
 
             <button id="loadBtn" class="w3-button w3-black w3-section w3-right" onclick="getTicket(); return false">LOAD</button>
@@ -297,6 +299,67 @@ body {font-family: "Lato", sans-serif}
                     );
 
                     break;
+
+                case "merrybet":
+
+                    $.post("/ticketId",
+                        {
+                            ticketId: ticketId,
+                            platform: platform
+                        },
+                        function (data, status) {
+
+                            let ss = data.outcomes
+                            console.log(ss)
+                            //ss = ss.Betslip;
+                            
+                            for (const game of ss) {
+                                
+                                let odd = game.odds;
+                                let gameTitle = game.eventName;
+                                gameTitle = gameTitle.replace('(live)', '')
+                                gameTitle = gameTitle.split("v");
+                                let results = [gameTitle[0], gameTitle[1], odd];
+
+                                setTable(results);
+                                //console.log(game);
+                            }
+
+                        }
+                    );
+
+                    break;
+
+                case "wazobet":
+
+                    $.post("/ticketId",
+                        {
+                            ticketId: ticketId,
+                            platform: platform
+                        },
+                        function (data, status) {
+
+                            let ss = data.bets
+                            console.log(ss)
+                            //ss = ss.Betslip;
+                            
+                            for (const game of ss) {
+                                
+                                let odd = game.oddValue;
+                                let gameTitle = game.matchDisplayName;
+                                //gameTitle = gameTitle.replace('(live)', '')
+                                gameTitle = gameTitle.split("-");
+                                let results = [gameTitle[0], gameTitle[1], odd];
+
+                                setTable(results);
+                                //console.log(game);
+                            }
+
+                        }
+                    );
+
+                    break;
+
 
                 default:
                     break;

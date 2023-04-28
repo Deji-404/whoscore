@@ -9,6 +9,8 @@ const betking = require('./betking');
 const sporty = require('./crawlers/sporty');
 const betway = require('./crawlers/betway');
 const bet9ja = require('./crawlers/bet9ja');
+const merrybet = require('./crawlers/merrybet');
+const wazobet = require('./crawlers/wazobet');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.json());
@@ -46,6 +48,16 @@ app.post('/ticketId', async function(req,res){
       case "bet9ja":
 
         result = await bet9ja.crawlTicket(ticketId);
+        break;
+
+      case "merrybet":
+
+        result = await merrybet.crawlTicket(ticketId);
+        break;
+
+      case "wazobet":
+
+        result = await wazobet.crawlTicket(ticketId);
         break;
     
       default:
