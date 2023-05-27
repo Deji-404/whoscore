@@ -12,6 +12,9 @@ const bet9ja = require('./crawlers/bet9ja');
 const merrybet = require('./crawlers/merrybet');
 const wazobet = require('./crawlers/wazobet');
 
+// ADD THIS
+var cors = require('cors');
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.json());
 app.use(express.static("express"));
@@ -22,6 +25,10 @@ app.get('/', function(req,res){
     res.sendFile(path.join(__dirname+'/express/index.html'));
     //__dirname : It will resolve to your project folder.
   });
+
+app.get('/ticketPage', function(req, res){
+  res.sendFile(path.join(__dirname+'/express/index1.html'));
+})
 
 app.post('/ticketId', async function(req,res){
     const ticketId = req.body.ticketId;
@@ -70,7 +77,52 @@ app.post('/ticketId', async function(req,res){
     
 })
 
+app.get('/tickets/:platform/:id', async function(req, res){
+  const { platform, ticketId } = req.params;
+  let result = {};
+  
+  switch (platform) {
+
+    case "betking":
+      
+      result = await betking.crawlTicket(ticketId);
+      break;
+
+    case "sportybet": 
+
+      result = await sporty.crawlTicket(ticketId);
+      break
+
+    case "betway":
+
+      result = await betway.crawlTicket(ticketId);
+      break;
+
+    case "bet9ja":
+
+      result = await bet9ja.crawlTicket(ticketId);
+      break;
+
+    case "merrybet":
+
+      result = await merrybet.crawlTicket(ticketId);
+      break;
+
+    case "wazobet":
+
+      result = await wazobet.crawlTicket(ticketId);
+      break;
+  
+    default:
+      break;
+
+  }
+
+  res.send(result)
+  console.log(platform);
+})
+
 const server = http.createServer(app);
-const port = 3000;
+const port = 3001;
 server.listen(port);
 console.debug('Server listening on port ' + port);

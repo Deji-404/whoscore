@@ -1,8 +1,7 @@
 const puppeteer = require('puppeteer');
 
-exports.crawlTicket = async (ticketId) => {
-
-    //const ticketId = '3QFYV56';
+const crawlTicket = async() => {
+    const ticketId = '3VQLRLH';
     let results = [];
     const api_url = `https://coupon.bet9ja.com/desktop/feapi/CouponAjax/GetBookABetCoupon?couponCode=${ticketId}`
     const browser = await puppeteer.launch({
@@ -61,4 +60,6 @@ exports.crawlTicket = async (ticketId) => {
 
     await browser.close();
     return results;
-};
+}
+
+crawlTicket()

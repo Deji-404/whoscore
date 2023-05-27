@@ -1,0 +1,64 @@
+[
+  {
+    "betId": "B9SK675274843GB-17636452",
+    "gameDateTime": "14 May 2023 14:34",
+    "totalGames": [
+      "undefined - undefined",
+      "undefined - undefined",
+      "undefined - undefined",
+      "undefined - undefined"
+    ],
+    "totalOdds": "22.6222",
+    "totalStakes": "100.0000",
+    "ticketStatus": "Pending",
+    "betPlatform": "bet9ja"
+  },
+  {
+    "bet": "undefined",
+    "odd": "1.50",
+    "gCheck": "1X2",
+    "betScore": "-1:-1",
+    "game": "undefined - undefined",
+    "homeTeamLogo": "",
+    "awayTeamLogo": "",
+    "gameStatus": "Pending",
+    "league": "LaLiga",
+    "matchDate": "14 May 2023 19:00"
+  },
+  {
+    "bet": "undefined",
+    "odd": "3.10",
+    "gCheck": "1X2",
+    "betScore": "-1:-1",
+    "game": "undefined - undefined",
+    "homeTeamLogo": "",
+    "awayTeamLogo": "",
+    "gameStatus": "Pending",
+    "league": "LaLiga",
+    "matchDate": "14 May 2023 16:30"
+  },
+  {
+    "bet": "undefined",
+    "odd": "1.75",
+    "gCheck": "1X2",
+    "betScore": "-1:-1",
+    "game": "undefined - undefined",
+    "homeTeamLogo": "",
+    "awayTeamLogo": "",
+    "gameStatus": "Pending",
+    "league": "Premier League",
+    "matchDate": "14 May 2023 15:30"
+  },
+  {
+    "bet": "undefined",
+    "odd": "2.78",
+    "gCheck": "1X2",
+    "betScore": "-1:-1",
+    "game": "undefined - undefined",
+    "homeTeamLogo": "",
+    "awayTeamLogo": "",
+    "gameStatus": "Pending",
+    "league": "Serie A",
+    "matchDate": "14 May 2023 16:00"
+  }
+]

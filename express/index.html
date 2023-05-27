@@ -6,10 +6,13 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <style>
 body {font-family: "Lato", sans-serif}
 .mySlides {display: none}
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 <body>
 
     <!-- Navbar -->
@@ -201,11 +204,14 @@ body {font-family: "Lato", sans-serif}
             
                 case "sportybet":
 
-                    $.post("/ticketId",
+                    var url = `/tickets/${platform}/${ticketId}`
+                    $.post('/ticketId',
+                        
                         {
                             ticketId: ticketId,
                             platform: platform
                         },
+                        
                         function (data, status) {
                             console.log(data);
                             totalStake = 100;
@@ -277,6 +283,8 @@ body {font-family: "Lato", sans-serif}
 
                             let json_data = data.O;
                             let result = [];
+
+                            console.log(json_data)
                             
                             for(var i in json_data)
                                 result.push([i, json_data [i]]);
@@ -340,7 +348,7 @@ body {font-family: "Lato", sans-serif}
                         function (data, status) {
 
                             let ss = data.bets
-                            console.log(ss)
+                            console.log(data)
                             //ss = ss.Betslip;
                             
                             for (const game of ss) {
