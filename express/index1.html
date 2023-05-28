@@ -127,11 +127,7 @@
                                                                                 console.log(data);
                                                                                 const totalGames = data.length;
 
-                                                                                $("#ticketIdLabel").text(ticketId);
-                                                                                $("#ticketPlatform").text(platform);
-                                                                                $("#betIdDiv").html('');
-                                                                                $("#ticketIdDiv").show();
-                                                                                $("#livescore").hide();
+                                                                                showBet(ticketId, platform);
 
                                                                                 for (const game of data) {
 
@@ -153,15 +149,159 @@
 
                                                                                 }
 
-                                                                                window.location.href = "#ticketIdDiv";
+                                                                                //window.location.href = "#ticketIdDiv";
 
                                                                             }
                                                                         )
                                                                         break;
                                                                 
+                                                                    case "bet9ja":
+                                                                        
+                                                                        $.post('/ticketId', 
+                                                                            {
+                                                                                ticketId: ticketId,
+                                                                                platform: platform
+                                                                            },
+                                                                            function(data, status) {
+
+                                                                                let json_data = data.O;
+                                                                                let result = [];
+                                                                                
+                                                                                for(var i in json_data)
+                                                                                    result.push([i, json_data [i]]);
+
+                                                                                showBet(ticketId, platform);
+                                                                                
+
+                                                                                for (const game of result) {
+                                                                                    
+                                                                                    try {
+
+                                                                                        let event = game[1];
+                                                                                        let gameTitle = event.E_NAME;
+                                                                                        let odd = event.V;
+                                                                                        let setScore = '';
+                                                                                        let start_date = event.STARTDATE;
+                                                                                        start_date = new Date(start_date);
+                                                                                        let newTime = start_date.toLocaleTimeString('en-US');
+                                                                                        let amPm = newTime.split(" ")[1];
+                                                                                        let seconds = newTime.split(":")[2].replace(amPm,'');
+                                                                                        let noAmPm = newTime.replace(amPm,'');
+                                                                                        let noAmPmSeconds = noAmPm.replace(":"+seconds,'');
+
+                                                                                        console.log(start_date);
+                                                                                        let playedSeconds = '0:0'
+                                                                    
+                                                                                        gameTitle = gameTitle.split('-');
+                                                                                        let results = [gameTitle[0], gameTitle[1], odd, setScore, noAmPmSeconds];
+                                                                                        
+                                                                                        setTable(results);
+                                                                                    }
+                                                                                    catch(e) {
+                                                                                        console.log(e)
+                                                                                    }
+                                                                                    
+                                                                                }
+
+                                                                            }
+                                                                        )
+                                                                        break;
+
+                                                                    case "betway":
+                                                                        
+                                                                        $.post("/ticketId",
+                                                                            {
+                                                                                ticketId: ticketId,
+                                                                                platform: platform
+                                                                            },
+                                                                            function (data, status) {
+
+                                                                                let ss = JSON.parse(data)
+                                                                                ss = ss.Betslip;
+
+                                                                                showBet(ticketId, platform);
+                                                                                
+                                                                                for (const game of ss) {
+
+                                                                                    try {
+                                                                                        console.log(game)
+                                                                                        let setScore = '';
+                                                                                        let playedSeconds = '';
+                                                                                        let odd = game.PriceDecimal;
+                                                                                        let gameTitle = game.EventTitle;
+                                                                                        gameTitle = gameTitle.split(" v ");
+                                                                                        let results = [gameTitle[0], gameTitle[1], odd, setScore, playedSeconds];
+
+                                                                                        setTable(results);
+                                                                                        //console.log(game);
+
+                                                                                    }
+                                                                                    catch(e){
+
+                                                                                        console.log(e)
+                                                                                    }
+                                                                                    
+                                                                                }
+
+                                                                            }
+                                                                        );
+                                                                        break;
+
+                                                                    case "merrybet":
+
+                                                                        $.post("/ticketId",
+                                                                            {
+                                                                                ticketId: ticketId,
+                                                                                platform: platform
+                                                                            },
+                                                                            function (data, status) {
+
+                                                                                let ss = data.outcomes
+                                                                                console.log(ss)
+                                                                                //ss = ss.Betslip;
+
+                                                                               showBet(ticketId, platform);
+                                                                                
+                                                                                for (const game of ss) {
+                                                                                    
+                                                                                    try {
+                                                                                            
+                                                                                        let odd = game.odds;
+                                                                                        let gameTitle = game.eventName;
+                                                                                        let setScore = '';
+
+                                                                                        gameTitle = gameTitle.replace('(live)', '')
+                                                                                        gameTitle = gameTitle.split("-");
+                                                                                        let results = [gameTitle[0], gameTitle[1], odd, setScore];
+
+                                                                                        setTable(results);
+                                                                                        console.log(game);
+                                                                                    }
+                                                                                    catch(e){
+                                                                                        console.log(e)
+                                                                                    }
+                                                                                  
+                                                                                }
+
+                                                                            }
+                                                                        );
+                                                                        break;
+
+                                                                    
                                                                     default:
                                                                         break;
                                                                 }
+                                                            }
+
+                                                            function showBet(ticketId, platform) {
+
+                                                                $("#ticketIdLabel").text(ticketId);
+                                                                $("#ticketPlatform").text(platform);
+                                                                $("#betIdDiv").html('');
+                                                                $("#ticketIdDiv").show();
+                                                                $("#livescore").hide();
+                                                                window.location.href = "#ticketIdDiv";
+
                                                             }
 
                                                             function setTable(results) {
